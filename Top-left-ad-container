@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LayRev AdFrame</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6238460468566559" crossorigin="anonymous"></script>
+  <style>
+    body { margin: 0; padding: 0; }
+  </style>
+</head>
+<body>
+  <ins id="ad-slot" class="adsbygoogle"
+       style="display:inline-block;width:300px;height:300px"
+       data-ad-client="ca-pub-6238460468566559"
+       data-ad-slot="">
+  </ins>
+
+  <script>
+    const slots = ['8571319614', '5537277375', '1752895289'];
+    const urlParam = new URLSearchParams(window.location.search).get("slot");
+
+    let currentIndex = urlParam
+      ? Math.max(0, slots.indexOf(urlParam)) || 0
+      : 0;
+
+    const adIns = document.getElementById("ad-slot");
+
+    function loadAd(slot) {
+      adIns.setAttribute("data-ad-slot", slot);
+      try {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        console.log("🔁 Showing ad slot:", slot);
+      } catch (e) {
+        console.warn("❌ Failed to push ad:", e);
+      }
+    }
+
+    loadAd(slots[currentIndex]);
+
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % slots.length;
+      adIns.setAttribute("data-ad-slot", slots[currentIndex]);
+      adIns.innerHTML = ""; // clear for re-render
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    }, 30000);
+  </script>
+</body>
+</html>
